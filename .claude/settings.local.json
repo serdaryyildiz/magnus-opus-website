@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-Process *)",
+      "PowerShell(Copy-Item *)",
+      "PowerShell(python -m pip install --quiet pymupdf 2>&1 | Select-Object -Last 20)"
+    ]
+  }
+}
