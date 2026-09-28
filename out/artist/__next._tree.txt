@@ -1,0 +1,11 @@
+:HL["/_next/static/chunks/32i8aprssuk0_.css","style"]
+:HL["/_next/static/media/e8f2fbee2754df70-s.p.1dqa_6e_ad4sj.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/images/big-spiral.png","image"]
+:HL["/images/ig-logo.png","image"]
+:HL["/images/hero-artist.jpg","image"]
+:HL["/images/card-artist-representation.jpg","image"]
+:HL["/images/artist-sculpture.jpg","image"]
+:HL["/images/artist-piano.jpg","image"]
+:HL["/images/artist-corridor.jpg","image"]
+:HL["/images/artist-collab.jpg","image"]
+0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"artist","param":null,"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"2d0SJ1NC7_IekwkblkTdm"}

@@ -1,4 +1,5 @@
 import TopBand from "@/components/TopBand";
+import ContactForm from "@/components/ContactForm";
 
 export const metadata = { title: "Contact | Magnum Opus" };
 
@@ -27,29 +28,7 @@ export default function ContactPage() {
                   or simply looking for a different way to experience art
                   and culture, we would be glad to hear from you.
                 </p>
-                <form className="space-y-4">
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    className="w-full border-b border-ink/20 bg-transparent py-3 text-sm placeholder:text-ink/40 focus:outline-none focus:border-gold"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    className="w-full border-b border-ink/20 bg-transparent py-3 text-sm placeholder:text-ink/40 focus:outline-none focus:border-gold"
-                  />
-                  <textarea
-                    placeholder="Message"
-                    rows={4}
-                    className="w-full border-b border-ink/20 bg-transparent py-3 text-sm placeholder:text-ink/40 focus:outline-none focus:border-gold resize-none"
-                  />
-                  <button
-                    type="submit"
-                    className="inline-block bg-ink text-white px-8 py-3 text-sm tracked uppercase hover:bg-gold transition-colors"
-                  >
-                    Get in touch
-                  </button>
-                </form>
+                <ContactForm />
               </div>
             </div>
             <div className="relative min-h-[280px] md:min-h-[460px]">

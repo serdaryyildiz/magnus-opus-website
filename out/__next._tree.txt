@@ -1,0 +1,13 @@
+:HL["/_next/static/chunks/32i8aprssuk0_.css","style"]
+:HL["/_next/static/media/e8f2fbee2754df70-s.p.1dqa_6e_ad4sj.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/images/big-spiral.png","image"]
+:HL["/images/ig-logo.png","image"]
+:HL["/images/home-hero.jpg","image"]
+:HL["/images/manifesto.jpg","image"]
+:HL["/images/card-artists.jpg","image"]
+:HL["/images/card-experiences.jpg","image"]
+:HL["/images/card-brands-culture.jpg","image"]
+:HL["/images/card-events.jpg","image"]
+:HL["/images/skyline-bw.jpg","image"]
+:HL["/images/chandelier.jpg","image"]
+0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}},"staleTime":300,"buildId":"2d0SJ1NC7_IekwkblkTdm"}
