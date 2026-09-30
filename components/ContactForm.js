@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+const FORM_ENDPOINT = "https://formsubmit.co/ajax/info@magnumopus.com.tr";
+
 export default function ContactForm() {
   const [form, setForm] = useState({ name: "", email: "", message: "", company: "" });
   const [status, setStatus] = useState("idle"); // idle | sending | success | error
@@ -18,15 +20,26 @@ export default function ContactForm() {
     setErrorMsg("");
 
     try {
-      const res = await fetch("/contact.php", {
+      // Sent through FormSubmit (https://formsubmit.co) because the hosting
+      // blocks outgoing mail from PHP. It emails the message to info@.
+      const res = await fetch(FORM_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          message: form.message,
+          _subject: "Magnum Opus — New Contact Form Message",
+          _replyto: form.email,
+          _template: "table",
+          _captcha: "false",
+          _honey: form.company, // honeypot: bots fill it, FormSubmit drops those
+        }),
       });
       const data = await res.json().catch(() => ({}));
 
-      if (!res.ok || !data.ok) {
-        throw new Error(data.error || "Something went wrong. Please try again.");
+      if (!res.ok || String(data.success) !== "true") {
+        throw new Error(data.message || "Something went wrong. Please try again.");
       }
 
       setStatus("success");

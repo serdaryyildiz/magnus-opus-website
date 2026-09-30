@@ -17,10 +17,11 @@ $subjectLine = 'Magnum Opus — New Contact Form Message';
 
 // SMTP settings: cPanel -> Email Accounts -> info@ -> "Connect Devices"
 // shows the exact "Outgoing Server" and the SSL port (usually 465).
-$smtpHost = 'mail.magnumopus.com.tr';
+$smtpHost = '127.0.0.1, 45.158.14.149, mail.magnumopus.com.tr';
 $smtpPort = 465;
 $smtpUser = 'info@magnumopus.com.tr';
 $smtpPass = '';   // <-- the info@ mailbox password
+$debug    = true;   // TEMPORARY: shows the real error in the form. Set to false when it works.
 // ------------------------------------------------------------------------
 
 function respond(int $status, array $body): void {
@@ -36,10 +37,17 @@ function smtp_send(string $host, int $port, string $user, string $pass,
     $ctx = stream_context_create(['ssl' => [
         'verify_peer' => false, 'verify_peer_name' => false, 'allow_self_signed' => true,
     ]]);
-    $fp = @stream_socket_client("ssl://{$host}:{$port}", $errno, $errstr, 15,
-                                STREAM_CLIENT_CONNECT, $ctx);
+    // $host may be a comma-separated list; the first one that connects wins.
+    $fp = false;
+    $errors = [];
+    foreach (array_map('trim', explode(',', $host)) as $h) {
+        $fp = @stream_socket_client("ssl://{$h}:{$port}", $errno, $errstr, 10,
+                                    STREAM_CLIENT_CONNECT, $ctx);
+        if ($fp) break;
+        $errors[] = "{$h}: {$errstr} ({$errno})";
+    }
     if (!$fp) {
-        throw new RuntimeException("SMTP connect failed: {$errstr} ({$errno})");
+        throw new RuntimeException('SMTP connect failed -> ' . implode(' | ', $errors));
     }
     stream_set_timeout($fp, 15);
 
@@ -122,7 +130,7 @@ $body = "New message from the website contact form:\n\n"
       . "Email: {$safeEmail}\n\n"
       . "Message:\n{$message}\n";
 
-$sent = false;
+$sent = false; $lastError = '';
 try {
     if ($smtpPass !== '') {
         smtp_send($smtpHost, $smtpPort, $smtpUser, $smtpPass,
@@ -135,11 +143,11 @@ try {
         $sent = mail($recipient, $subjectLine, $body, $headers);
     }
 } catch (Throwable $e) {
-    error_log('contact.php: send failed: ' . $e->getMessage());
+    error_log('contact.php: send failed: ' . $e->getMessage()); $lastError = $e->getMessage();
 }
 
 if ($sent) {
     respond(200, ['ok' => true]);
 }
 error_log('contact.php: not sent. Last PHP error: ' . json_encode(error_get_last()));
-respond(500, ['ok' => false, 'error' => 'The message could not be sent. Please try again later.']);
+respond(500, ['ok' => false, 'error' => 'The message could not be sent. Please try again later.' . (($debug and $lastError !== '') ? ' [debug: ' . $lastError . ']' : '')]);
